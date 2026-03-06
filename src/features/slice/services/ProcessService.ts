@@ -1,15 +1,12 @@
 import { decodeArrayBuffer } from "@lib/decode";
+import { getWaveformData } from "@lib/waveform";
 
-export async function processFile(file: File) {
+export async function decode(file: File) {
     const arrayBuffer = await file.arrayBuffer();
     const audioBuffer = await decodeArrayBuffer(arrayBuffer);
-    console.log('Sample rate: ', audioBuffer.sampleRate);
-    console.log('Duration: ', audioBuffer.duration);
-    console.log('Length: ', audioBuffer.length);
-    console.log('Number of channels: ', audioBuffer.numberOfChannels);
+    return audioBuffer;
+}
 
-    for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
-        console.log(`Channel ${i} data:`);
-        console.log(audioBuffer.getChannelData(i));
-    }
+export function generateWaveForm(buffer: AudioBuffer, size: number) {
+    return getWaveformData(buffer, size);
 }
